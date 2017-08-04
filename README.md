@@ -6,13 +6,12 @@ Wiring
 =====
 
 Wire ESP8266 as follows:
-D1 - SDA on OLED
-D2 - SDL on OLED
-
-D5 - SCK on SD Card
-D6 - MISO on SD Card
-D7 - MOSI on SD Card
-D8 - CS on SD Card
+* D1 - SDA on OLED
+* D2 - SDL on OLED
+* D5 - SCK on SD Card
+* D6 - MISO on SD Card
+* D7 - MOSI on SD Card
+* D8 - CS on SD Card
 
 Both SD card and OLED runs off 3.3v DC, so wire to the appropriate pins
 
@@ -24,7 +23,13 @@ Setup
 =====
 Flash NodeMCU to the esp8266 compiled with the following libraries:
 
+file, gpio, i2c, mdns, net, node, spi, tmr, u8g, uart, wifi
+
+((probably via https://nodemcu-build.com/ ))
+
 
 Upload user.lua and init.lua to the ESP8266
+
 Upload all other files to the SD card
+
 Reboot the chip, you should start serving as soon as the background is no longer mostly white
