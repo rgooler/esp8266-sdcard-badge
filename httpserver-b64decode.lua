@@ -8,7 +8,6 @@
 -- Author: Marcos Kirsch
 
 local function uipow(a, b)
-    print('httpserver-b64decode:uipow')
     local ret = 1
     if b >= 0 then
         for i = 1, b do
@@ -21,13 +20,11 @@ end
 -- bitshift functions (<<, >> equivalent)
 -- shift left
 local function lsh(value,shift)
-  print('httpserver-b64decode:lsh')
    return (value*(uipow(2, shift))) % 256
 end
 
 -- shift right
 local function rsh(value,shift)
-  print('httpserver-b64decode:rsh')
    -- Lua builds with no floating point don't define math.
    if math then return math.floor(value/uipow(2, shift)) % 256 end
    return (value/uipow(2, shift)) % 256
@@ -35,13 +32,11 @@ end
 
 -- return single bit (for OR)
 local function bit(x,b)
-   print('httpserver-b64decode:bit')
    return (x % uipow(2, b) - x % uipow(2, (b-1)) > 0)
 end
 
 -- logic OR for number values
 local function lor(x,y)
-   print('httpserver-b64decode:lor')
    result = 0
    for p=1,8 do result = result + (((bit(x,p) or bit(y,p)) == true) and uipow(2, (p-1)) or 0) end
    return result
@@ -49,7 +44,6 @@ end
 
 -- Character decoding table
 local function toBase64Byte(char)
-  print('httpserver-b64decode:toBase64Byte')
    ascii = string.byte(char, 1)
    if ascii >= string.byte('A', 1) and ascii <= string.byte('Z', 1) then return ascii - string.byte('A', 1)
    elseif ascii >= string.byte('a', 1) and ascii <= string.byte('z', 1) then return ascii - string.byte('a', 1) + 26
@@ -63,7 +57,6 @@ end
 
 -- decode base64 input to string
 return function(data)
-   print('httpserver-b64decode:function')
    local chars = {}
    local result=""
    for dpos=0,string.len(data)-1,4 do

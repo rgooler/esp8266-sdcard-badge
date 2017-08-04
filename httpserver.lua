@@ -4,7 +4,7 @@
 -- Starts web server in the specified port.
 return function (port)
 
-   local s = net.createServer(net.TCP) -- 10 seconds client timeout
+   local s = net.createServer(net.TCP, 10) -- 10 seconds client timeout
    s:listen(
       port,
       function (connection)
