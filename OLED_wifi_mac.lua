@@ -1,6 +1,5 @@
 -- Init the display
 sla = 0x3C
-i2c.setup(0, 1, 2, i2c.SLOW)
 disp = u8g.ssd1306_128x64_i2c(sla)
 disp:setFont(u8g.font_chikita)
 disp:setFontRefHeightExtendedText()

@@ -60,3 +60,5 @@ end
 
 firmwareInfo()
 tmr.alarm(0, BootTimeout, 0, init)
+i2c.setup(0, 1, 2, i2c.SLOW)
+dofile('OLED_dcfur_on.lua')

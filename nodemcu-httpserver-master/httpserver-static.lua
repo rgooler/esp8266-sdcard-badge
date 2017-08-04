@@ -3,6 +3,7 @@
 -- Author: Marcos Kirsch
 
 return function (connection, req, args)
+   print('httpserver-static:function')
    dofile("httpserver-header.lc")(connection, 200, args.ext, args.isGzipped)
    -- Send file in little chunks
    local bytesRemaining = file.list()[args.file]
@@ -16,11 +17,11 @@ return function (connection, req, args)
       local chunk = fileHandle:read(bytesToRead)
       connection:send(chunk)
       bytesRemaining = bytesRemaining - #chunk
-      --print(args.file .. ": Sent "..#chunk.. " bytes, " .. bytesRemaining .. " to go.")
+      print(args.file .. ": Sent "..#chunk.. " bytes, " .. bytesRemaining .. " to go.")
       chunk = nil
       collectgarbage()
    end
-   -- print("Finished sending: ", args.file)
+   print("Finished sending: ", args.file)
    fileHandle:close()
    fileHandle = nil
    collectgarbage()

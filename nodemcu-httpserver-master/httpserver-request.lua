@@ -3,24 +3,29 @@
 -- Author: Marcos Kirsch
 
 local function validateMethod(method)
-   local httpMethods = {GET=true, HEAD=true, POST=true, PUT=true, DELETE=true, TRACE=true, OPTIONS=true, CONNECT=true, PATCH=true}
+   print('httpserver-request:validateMethod')
+   local httpMethods = {GET=true, HEAD=true, POST=true, PUT=true, DELETE=false, TRACE=false, OPTIONS=true, CONNECT=true, PATCH=false}
    -- default for non-existent attributes returns nil, which evaluates to false
    return httpMethods[method]
 end
 
 local function uriToFilename(uri)
-   return "http/" .. string.sub(uri, 2, -1)
+   print('httpserver-request:uriToFilename')
+   return "/SD0/" .. string.sub(uri, 2, -1)
 end
 
 local function hex_to_char(x)
+   print('httpserver-request:hex_to_char')
   return string.char(tonumber(x, 16))
 end
 
 local function uri_decode(input)
+   print('httpserver-request:uri_decode')
   return input:gsub("%+", " "):gsub("%%(%x%x)", hex_to_char)
 end
 
 local function parseArgs(args)
+   print('httpserver-request:parseArgs')
    local r = {}; i=1
    if args == nil or args == "" then return r end
    for arg in string.gmatch(args, "([^&]+)") do
@@ -32,6 +37,7 @@ local function parseArgs(args)
 end
 
 local function parseFormData(body)
+   print('httpserver-request:parseFormData')
    local data = {}
    --print("Parsing Form Data")
    for kv in body.gmatch(body, "%s*&?([^=]+=[^&]+)") do
@@ -43,23 +49,25 @@ local function parseFormData(body)
 end
 
 local function getRequestData(payload)
+   print('httpserver-request:getRequestData')
+   print("payload = [" .. payload .. "]")
    local requestData
    return function ()
-      --print("Getting Request Data")
+      print("Getting Request Data")
       if requestData then
          return requestData
       else
-         --print("payload = [" .. payload .. "]")
+         print("payload = [" .. payload .. "]")
          local mimeType = string.match(payload, "Content%-Type: ([%w/-]+)")
          local bodyStart = payload:find("\r\n\r\n", 1, true)
          local body = payload:sub(bodyStart, #payload)
          payload = nil
          collectgarbage()
-         --print("mimeType = [" .. mimeType .. "]")
-         --print("bodyStart = [" .. bodyStart .. "]")
-         --print("body = [" .. body .. "]")
+         print("mimeType = [" .. mimeType .. "]")
+         print("bodyStart = [" .. bodyStart .. "]")
+         print("body = [" .. body .. "]")
          if mimeType == "application/json" then
-            --print("JSON: " .. body)
+            print("JSON: " .. body)
             requestData = cjson.decode(body)
          elseif mimeType == "application/x-www-form-urlencoded" then
             requestData = parseFormData(body)
@@ -72,6 +80,7 @@ local function getRequestData(payload)
 end
 
 local function parseUri(uri)
+   print('httpserver-request:parseUri')
    local r = {}
    local filename
    local ext
@@ -106,6 +115,7 @@ end
 -- Parses the client's request. Returns a dictionary containing pretty much everything
 -- the server needs to know about the uri.
 return function (request)
+   print('httpserver-request:requrest')
    --print("Request: \n", request)
    local e = request:find("\r\n", 1, true)
    if not e then return nil end

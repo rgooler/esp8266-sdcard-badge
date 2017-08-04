@@ -7,6 +7,7 @@ basicAuth = {}
 -- Returns true if the user/password match one of the users/passwords in httpserver-conf.lua.
 -- Returns false otherwise.
 function loginIsValid(user, pwd, users)
+   print('httpserver-basicauth:loginIsValid')
    if user == nil then return false end
    if pwd == nil then return false end
    if users[user] == nil then return false end
@@ -18,6 +19,7 @@ end
 -- Returns the username if header contains valid credentials,
 -- nil otherwise.
 function basicAuth.authenticate(header)
+   print('httpserver-basicauth:basicAuth.authenticate')
    local conf = dofile("httpserver-conf.lc")
    local credentials_enc = header:match("Authorization: Basic ([A-Za-z0-9+/=]+)")
    if not credentials_enc then
@@ -35,6 +37,7 @@ function basicAuth.authenticate(header)
 end
 
 function basicAuth.authErrorHeader()
+   print('httpserver-basicauth:basicAuth.authErrorHeader')
    local conf = dofile("httpserver-conf.lc")
    return "WWW-Authenticate: Basic realm=\"" .. conf.auth.realm .. "\""
 end
