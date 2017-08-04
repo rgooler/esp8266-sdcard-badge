@@ -33,3 +33,13 @@ Upload user.lua and init.lua to the ESP8266
 Upload all other files to the SD card
 
 Reboot the chip, you should start serving as soon as the background is no longer mostly white
+
+
+Parts
+=====
+
+https://www.banggood.com/WeMos-D1-Mini-V2-NodeMcu-4M-Bytes-Lua-WIFI-Internet-Of-Things-Development-Board-Based-ESP8266-p-1115398.html?rmmds=search
+
+https://www.banggood.com/0_96-Inch-4Pin-White-IIC-I2C-OLED-Display-Module-12864-LED-For-Arduino-p-958196.html?rmmds=search
+
+https://www.banggood.com/5Pcs-Slot-Socket-Reader-SD-Card-Module-For-Mp3-Arduino-Compatible-p-955686.html?rmmds=search
